@@ -1,7 +1,7 @@
 from pymongo import MongoClient
-from flask import current_app
+from config import Config
 
 def init_db():
-    uri = current_app.config["MONGO_URI"]
-    client = MongoClient(uri)
-    current_app.mongo = client.get_default_database()
+    client = MongoClient(Config.MONGO_URI)
+    db = client.get_database()
+    messages_collection = db.messages

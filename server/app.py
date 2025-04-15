@@ -4,10 +4,10 @@ from flask_socketio import SocketIO
 from auth.routes import auth_blueprint
 from chat.sockets import socketio_events
 from db.mongo import init_db
-import os
+from config import Config  # Import Config class to load settings
 
 app = Flask(__name__)
-app.config.from_pyfile("config.py")
+app.config.from_object(Config)
 CORS(app, supports_credentials=True)
 
 socketio = SocketIO(app, cors_allowed_origins="*")
