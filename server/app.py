@@ -23,7 +23,8 @@ socketio_events(socketio)
 
 @app.route("/")
 def index():
-    return {"message": "Backend is running!"}
+    return jsonify({"message": "Backend is running!"})
 
 if __name__ == "__main__":
+    socketio.init_app(app)
     socketio.run(app, debug=True)
