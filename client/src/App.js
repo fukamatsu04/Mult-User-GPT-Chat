@@ -8,10 +8,21 @@ function App() {
   const [input, setInput] = useState("");
 
   useEffect(() => {
+    // Listen for individual messages sent by the server
     socket.on("message", (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
-    return () => socket.off("message");
+  
+    // Listen for the chat history when client connects
+    socket.on("history", (history) => {
+      setMessages(history);  // set the whole history as initial messages
+    });
+  
+    // Cleanup listeners when component unmounts
+    return () => {
+      socket.off("message");
+      socket.off("history");
+    };
   }, []);
 
   const sendMessage = () => {

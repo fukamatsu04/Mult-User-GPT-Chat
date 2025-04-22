@@ -4,6 +4,7 @@ from flask_socketio import SocketIO
 from auth.routes import auth_blueprint
 from chat.sockets import socketio_events
 from db.mongo import init_db
+from db.mongo import close_db
 from config import Config  # Import Config class to load settings
 
 app = Flask(__name__)
@@ -27,4 +28,5 @@ def index():
 
 if __name__ == "__main__":
     socketio.init_app(app)
+    app.teardown_appcontext(close_db)
     socketio.run(app, debug=True)
